@@ -16,20 +16,14 @@ class CrearTablaAdscripciones extends Migration
 
         if (!Schema::hasTable('adscripciones')) {
 
-            Schema::create('adscripciones', function (Blueprint $table) {
-                $table->engine='InnoDB';
-                $table->charset='utf8';
-                $table->collation='utf8_general_ci';
+            Schema::create('adscripciones', function (Blueprint $table) {               
                 $table->increments('id');           
-                $table->integer('user_id')->unsigned()->nullable();
-                $table->foreign('user_id')->references('id')->on('users');
-                $table->char('codigo', 12);
-                $table->string('descripcion', 255);
-                $table->string('direccion', 255);
-                $table->char('lada', 3);   
-                $table->char('telefono', 10);                     
-                $table->float('ubicacion_lt', 16,8);
-                $table->float('ubicacion_ln', 16, 8);           
+                $table->integer('user_id');                
+                $table->string('codigo', 16);
+                $table->string('descripcion', 80);                                                 
+                $table->string('ingresa_facturas', 1);
+                $table->string('autorizado_facturas', 60);          
+                $table->string('estatus',1); 
                 $table->rememberToken();
                 $table->timestamps();                
             });

@@ -109,4 +109,6 @@ Route::get('/api/getdocumentos/{dummy}', 'SedesemController@getDocumentos');
 
 Route::get('/api/getefederativas/{dummy}', 'SedesemController@getEfederativas'); 
 
+/* Finanzas */
 
+Route::post('/api/getadscripciones/', 'AdscripcionController@getAdscripciones');

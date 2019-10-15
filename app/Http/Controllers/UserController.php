@@ -60,7 +60,7 @@ class UserController extends Controller
     	$name = (!is_null($json) && isset($params->name)) ? $params->name : null;
     	$surname = (!is_null($json) && isset($params->surname)) ? $params->surname : null;     	
     	//$role = (!is_null($json) && isset($params->role)) ? $params->role : null;
-        $role = 3; // Role usuario TECNICO
+        $role = 2; // Role usuario OPERATIVO
     	$password = (!is_null($json) && isset($params->password)) ? $params->password : null;
 
     	if (!is_null($email) && !is_null($password) && !is_null($name)){
@@ -157,7 +157,7 @@ class UserController extends Controller
                 'surname' => 'required' 
             ]);
 
-            if ($validate->fails()) {
+            if ($validate->fails()) { 
                 return response()->json($validate->errors(), 400);
             } 
 

@@ -197,5 +197,58 @@ class AdscripcionController extends Controller
         return response()->json($data, 200);
 
     }
+
+    /* FINANZAS */
+
+    public function getAdscripciones(Request $request) {
+
+        $hash = $request->header('Authorization', null);
+
+        $jwtAuth = new JwtAuth();
+        $checkToken = $jwtAuth->checkToken($hash);
+
+        if ($checkToken) {
+            // Recoger parametros POST
+
+            $json = $request->input('json', null);
+
+            $params = json_decode($json);
+
+            $params_array = json_decode($json, true);
+
+            $criterio = $params->criterio;
+
+            if ($criterio == '' || $criterio ='*') {
+
+                $adscripciones = Adscripcion::select('id', 'user_id', 'codigo','descripcion', 'ingresa_facturas', 'estatus')
+                    ->where('codigo', 'LIKE', '%'.$criterio.'%')
+                    ->orWhere('descripcion', 'LIKE', '%'.$criterio.'%')                            
+                    ->limit(50)
+                    ->get();   
+
+            } else {
+                $adscripciones = Adscripcion::select('id', 'user_id', 'codigo','descripcion', 'ingresa_facturas', 'estatus')                                           
+                    ->limit(50)
+                    ->get(); 
+            }            
+            
+            if(is_object($adscripciones)){           
+                return response()->json(array('adscripciones' => $adscripciones, 'status' => 'success'), 200);
+            }else {
+                return response()->json(array('message' => 'Catálogo vacio', 'status' => 'error'), 200);
+            }
+
+        }else {
+            // Devolver error
+
+            $data = array(
+                'mesaage' => 'Login incorrecto',
+                'status' => 'error',
+                'code' => 300
+            );
+
+        };
+        
+    }
     
 }
